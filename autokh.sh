@@ -11,9 +11,9 @@ fi
 
 # Step 2: Prompt for service name and other variables
 read -p "Enter service name (without .service extension): " NAME
-read -p "Enter Iran ip: " IP-IR
-read -p "Enter Iran port: " Port-IR
-read -p "Enter kharej port: " Port-KH
+read -p "Enter Iran ip: " IP_IR
+read -p "Enter Iran port: " Port_IR
+read -p "Enter kharej port: " Port_KH
 read -p "Enter SNI: " SNI
 read -p "Enter password: " PASS
 
@@ -33,7 +33,7 @@ Description=Reverse TLS Tunnel
 Type=idle
 User=root
 WorkingDirectory=/root
-ExecStart=/root/RTT --kharej --iran-ip:${IP-IR} --iran-port:${Port-IR} --toip:127.0.0.1 --toport:${Port-KH} --password:${PASS} --sni:${SNI} --terminate:24
+ExecStart=/root/RTT --kharej --iran-ip:${IP_IR} --iran-port:${Port_IR} --toip:127.0.0.1 --toport:${Port_KH} --password:${PASS} --sni:${SNI} --terminate:24
 Restart=always
 
 [Install]
