@@ -22,6 +22,8 @@ SERVICE_FILE="/etc/systemd/system/${NAME}.service"
 if [ -f "$SERVICE_FILE" ]; then
     echo "Deleting existing service file: $SERVICE_FILE"
     rm "$SERVICE_FILE"
+    # Flag indicating that the service file was deleted
+    SERVICE_DELETED=true
 fi
 
 # Step 4: Create new service file
@@ -43,8 +45,14 @@ EOF
 # Step 5: Reload systemd daemon
 systemctl daemon-reload
 
-# Step 6: Start the service
-systemctl start "${NAME}.service"
+# Step 6: Start or restart the service based on whether it was deleted before
+if [ "$SERVICE_DELETED" = true ]; then
+    # If the service was deleted, restart it
+    systemctl restart "${NAME}.service"
+else
+    # Otherwise, start the service
+    systemctl start "${NAME}.service"
+fi
 
 # Step 7: Check the service status
 systemctl status "${NAME}.service"
